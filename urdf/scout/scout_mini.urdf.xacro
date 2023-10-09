@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout1">
+
+    <xacro:arg name="load_chassis" default="true"/>
+    <xacro:arg name="use_sim" default="true"/>
+
+    <xacro:if value="$(arg load_chassis)">
+        <xacro:include filename="$(find sct_description)/urdf/scout/chassis.urdf.xacro"/>
+        <xacro:chassis/>
+    </xacro:if>
+
+    <xacro:if value="$(arg use_sim)">
+        <gazebo>
+            <plugin name="sct_ros_control" filename="libsct_robot_hw_sim.so">
+                <robotNamespace>/</robotNamespace>
+                <robotSimType>sct_gazebo/SctRobotHWSim</robotSimType>
+            </plugin>
+        </gazebo>
+    </xacro:if>
+
+</robot>

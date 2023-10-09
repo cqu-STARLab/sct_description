@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout_wheel">
+
+    <xacro:macro name="wheel"
+                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree max_effort max_velocity">
+        <!--  link  -->
+        <link name="${prefix}_wheel">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://sct_description/meshes/common/wheel.dae"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="8"/>
+                <origin xyz="0 0 0"/>
+                <inertia ixx="0.1171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.1171"/>
+            </inertial>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://sct_description/meshes/common/wheel.dae"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <!--  joint  -->
+        <joint name="${prefix}_wheel_joint" type="revolute">
+            <axis xyz="0 0 -1"/>
+            <origin xyz="${wheel_x_offset} ${wheel_y_offset} ${wheel_offset_z}" rpy="${rotation_degree} 0 0"/>
+            <limit effort="${max_effort}" velocity="${max_velocity}" lower="-1e9" upper="1e9"/>
+            <dynamics damping="0.0" friction="0.01"/>
+            <parent link="${connected_to}"/>
+            <child link="${prefix}_wheel"/>
+        </joint>
+
+    </xacro:macro>
+
+    <xacro:macro name="wheel_transmission" params="prefix mechanical_reduction">
+        <transmission name="${prefix}_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <actuator name="${prefix}_wheel_motor">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <mechanicalReduction>${mechanical_reduction}</mechanicalReduction>
+            </actuator>
+            <joint name="${prefix}_wheel_joint">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+        </transmission>
+    </xacro:macro>
+
+</robot>
