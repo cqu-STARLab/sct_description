@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="location">
+    <xacro:macro name="location"
+                 params="connected_to location_name use_sim xyz:='0 0 0' rpy:='0 0 0' " >
+
+
+        <!-- location is fixed to the base link -->
+        <joint name="${location_name}_joint" type="fixed">
+            <origin xyz="${xyz}" rpy="${rpy}"/>
+            <parent link="${connected_to}"/>
+            <child link="${location_name}"/>
+        </joint>
+        <!-- location link -->
+        <link name="${location_name}">
+            <inertial>
+                <mass value="0.01"/>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://sct_description/meshes/common/location.stl" scale="1.0 1.0 1.0"/>
+                </geometry>
+            </visual>
+        </link>
+        <gazebo reference="${location_name}_joint">
+            <disableFixedJointLumping>true</disableFixedJointLumping>
+        </gazebo>
+
+        <xacro:if value="$(arg use_sim)">
+            <!-- location sim plugin -->
+            <gazebo>
+                <plugin name="sct_odom_sim" filename="libsct_odom_sim.so">
+                    <frame_id>base_link</frame_id>
+                    <child_frame_id>location</child_frame_id>
+                    <topic_name>odom</topic_name>
+                    <publish_rate>50.0</publish_rate>s
+                    <robot_namespace>/</robot_namespace>
+                </plugin>
+            </gazebo>
+        </xacro:if>
+    </xacro:macro>
+</robot>

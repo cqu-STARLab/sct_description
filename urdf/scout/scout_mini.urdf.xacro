@@ -3,12 +3,20 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout1">
 
     <xacro:arg name="load_chassis" default="true"/>
+    <xacro:arg name="load_location" default="true"/>
     <xacro:arg name="use_sim" default="true"/>
 
     <xacro:if value="$(arg load_chassis)">
         <xacro:include filename="$(find sct_description)/urdf/scout/chassis.urdf.xacro"/>
         <xacro:chassis/>
     </xacro:if>
+
+    <xacro:if value="$(arg load_location)">
+        <xacro:include filename="$(find sct_description)/urdf/common/location.urdf.xacro"/>
+        <xacro:location connected_to="base_link" location_name="location" use_sim="$(arg use_sim)"
+                      xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:if>
+
 
     <xacro:if value="$(arg use_sim)">
         <gazebo>
