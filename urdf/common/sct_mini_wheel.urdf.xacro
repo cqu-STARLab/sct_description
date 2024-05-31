@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout_wheel">
 
-    <xacro:macro name="wheel"
-                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree max_effort max_velocity">
+    <xacro:macro name="sct_mini_wheel"
+                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree">
         <!--  link  -->
         <link name="${prefix}_wheel">
             <visual>
@@ -26,9 +26,9 @@
 
         <!--  joint  -->
         <joint name="${prefix}_wheel_joint" type="revolute">
-            <axis xyz="0 0 -1"/>
+            <axis xyz="0 0 1"/>
             <origin xyz="${wheel_x_offset} ${wheel_y_offset} ${wheel_offset_z}" rpy="${rotation_degree} 0 0"/>
-            <limit effort="${max_effort}" velocity="${max_velocity}" lower="-1e9" upper="1e9"/>
+            <limit effort="50" velocity="100" lower="-1e9" upper="1e9"/>
             <dynamics damping="0.0" friction="0.01"/>
             <parent link="${connected_to}"/>
             <child link="${prefix}_wheel"/>

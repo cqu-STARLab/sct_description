@@ -1,6 +1,6 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:include filename="$(find sct_description)/urdf/common/wheel.urdf.xacro"/>
+    <xacro:include filename="$(find sct_description)/urdf/common/sct_mini_wheel.urdf.xacro"/>
 
     <!-- https://upload.wikimedia.org/wikipedia/commons/5/52/Wheelbase_and_Track.png -->
     <xacro:property name="base_x_size" value="0.6200000"/>
@@ -44,31 +44,27 @@
             <child link="inertial_link"/>
         </joint>
 
-        <xacro:wheel prefix="left_front" connected_to="inertial_link"
+        <xacro:sct_mini_wheel prefix="left_front" connected_to="base_link"
                      wheel_x_offset="${wheel_base/2}" wheel_y_offset="${wheel_track/2}"
                      wheel_z_offset="${wheel_offset_z}" rotation_degree="${-pi/2}"
-                     max_effort="50" max_velocity="100"
         />
-        <xacro:wheel prefix="right_front" connected_to="inertial_link"
+        <xacro:sct_mini_wheel prefix="right_front" connected_to="base_link"
                      wheel_x_offset="${wheel_base/2}" wheel_y_offset="${-wheel_track/2}"
                      wheel_z_offset="${wheel_offset_z}" rotation_degree="${pi/2}"
-                     max_effort="50" max_velocity="100"
         />
-        <xacro:wheel prefix="left_back" connected_to="inertial_link"
+        <xacro:sct_mini_wheel prefix="left_back" connected_to="base_link"
                      wheel_x_offset="${-wheel_base/2}" wheel_y_offset="${wheel_track/2}"
                      wheel_z_offset="${wheel_offset_z}" rotation_degree="${-pi/2}"
-                     max_effort="50" max_velocity="100"
         />
-        <xacro:wheel prefix="right_back" connected_to="inertial_link"
+        <xacro:sct_mini_wheel prefix="right_back" connected_to="base_link"
                      wheel_x_offset="${-wheel_base/2}" wheel_y_offset="${-wheel_track/2}"
                      wheel_z_offset="${wheel_offset_z}" rotation_degree="${pi/2}"
-                     max_effort="50" max_velocity="100"
         />
 
         <xacro:wheel_transmission prefix="left_front" mechanical_reduction="1"/>
-        <xacro:wheel_transmission prefix="right_front" mechanical_reduction="1"/>
+        <xacro:wheel_transmission prefix="right_front" mechanical_reduction="-1"/>
         <xacro:wheel_transmission prefix="left_back" mechanical_reduction="1"/>
-        <xacro:wheel_transmission prefix="right_back" mechanical_reduction="1"/>
+        <xacro:wheel_transmission prefix="right_back" mechanical_reduction="-1"/>
     </xacro:macro>
 
 </robot>
