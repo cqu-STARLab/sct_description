@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="radar">
     <xacro:include filename="$(find sct_description)/urdf/common/inertia_utils.urdf.xacro"/>
-    <xacro:macro name="RADAR" params="connected_to radar_name use_sim name_space xyz:='0 0 0' rpy:='0 0 0' ">
+    <xacro:macro name="RADAR" params="connected_to use_sim name_space xyz:='0 0 0' rpy:='0 0 0' ">
 
-        <xacro:arg name="ns" default="${name_space}"/>
         <!-- Radar is fixed to the base link -->
-        <joint name="${radar_name}_joint" type="fixed">
+        <joint name="${name_space}_radar_joint" type="fixed">
             <origin xyz="${xyz}" rpy="${rpy}"/>
             <parent link="${connected_to}"/>
-            <child link="${radar_name}_link"/>
+            <child link="${name_space}_radar_link"/>
         </joint>
         <!-- Radar link -->
-        <link name="${radar_name}_link">
+        <link name="${name_space}_radar_link">
             <xacro:cylinder_inertial_matrix m="0.1" r="0.03" h="0.05"/>
             <visual>
                 <geometry>
@@ -29,16 +28,13 @@
                 <color rgba="255 108 10 255"/>
             </material>
         </link>
-        <gazebo reference="${radar_name}">
-            <material>Gazebo/Orange</material>
-        </gazebo>
-        <gazebo reference="${radar_name}_joint">
+        <gazebo reference="radar_joint">
             <disableFixedJointLumping>true</disableFixedJointLumping>
         </gazebo>
 
         <xacro:if value="$(arg use_sim)">
             <!-- radar sim plugin -->
-            <gazebo reference="${radar_name}_link">
+            <gazebo reference="${name_space}_radar_link">
                 <material>Gazebo/FlatBlack</material>
                 <sensor type="ray" name="rplidar">
                     <pose>0 0 0 0 0 0</pose>
@@ -65,9 +61,9 @@
                         </noise>
                     </ray>
                     <plugin name="gazebo_rplidar" filename="libgazebo_ros_laser.so">
-                        <robotNamespace>$(arg ns)</robotNamespace>
+                        <robotNamespace>${name_space}</robotNamespace>
                         <topicName>scan</topicName>
-                        <frameName>${radar_name}_link</frameName>
+                        <frameName>${name_space}_radar_link</frameName>
                     </plugin>
                 </sensor>
             </gazebo>

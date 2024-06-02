@@ -10,12 +10,12 @@
 
     <xacro:if value="$(arg load_chassis)">
         <xacro:include filename="$(find sct_description)/urdf/scout/chassis.urdf.xacro"/>
-        <xacro:chassis/>
+        <xacro:chassis name_space="$(arg robot_ns)"/>
     </xacro:if>
 
     <xacro:if value="$(arg load_radar)">
         <xacro:include filename="$(find sct_description)/urdf/common/radar.urdf.xacro"/>
-        <xacro:RADAR connected_to="base_link" radar_name="radar" use_sim="$(arg use_sim)" name_space="$(arg robot_ns)"
+        <xacro:RADAR connected_to="$(arg robot_ns)_base_link" use_sim="$(arg use_sim)" name_space="$(arg robot_ns)"
                      xyz="0.0 0.0 0.35"
                      rpy="0.0 0.0 0.0"/>
     </xacro:if>
