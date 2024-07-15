@@ -2,9 +2,9 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout_wheel">
 
     <xacro:macro name="sct_mini_wheel"
-                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree name_space">
+                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree ">
         <!--  link  -->
-        <link name="${name_space}_${prefix}_wheel">
+        <link name="${prefix}_wheel">
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
@@ -31,7 +31,7 @@
             <limit effort="50" velocity="100" lower="-1e9" upper="1e9"/>
             <dynamics damping="0.0" friction="0.01"/>
             <parent link="${connected_to}"/>
-            <child link="${name_space}_${prefix}_wheel"/>
+            <child link="${prefix}_wheel"/>
         </joint>
 
     </xacro:macro>

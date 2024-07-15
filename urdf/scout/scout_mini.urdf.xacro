@@ -6,16 +6,16 @@
     <xacro:arg name="load_radar" default="true"/>
     <xacro:arg name="load_odom_sim" default="true"/>
     <xacro:arg name="use_sim" default="true"/>
-    <xacro:arg name="robot_ns" default="scout"/>
+    <xacro:arg name="robot_ns" default="/"/>
 
     <xacro:if value="$(arg load_chassis)">
         <xacro:include filename="$(find sct_description)/urdf/scout/chassis.urdf.xacro"/>
-        <xacro:chassis name_space="$(arg robot_ns)"/>
+        <xacro:chassis />
     </xacro:if>
 
     <xacro:if value="$(arg load_radar)">
         <xacro:include filename="$(find sct_description)/urdf/common/radar.urdf.xacro"/>
-        <xacro:RADAR connected_to="$(arg robot_ns)_base_link" use_sim="$(arg use_sim)" name_space="$(arg robot_ns)"
+        <xacro:RADAR connected_to="base_link" use_sim="$(arg use_sim)"
                      xyz="0.0 0.0 0.35"
                      rpy="0.0 0.0 0.0"/>
     </xacro:if>

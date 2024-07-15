@@ -13,9 +13,9 @@
     <xacro:property name="wheel_base" value="0.463951"/>
     <xacro:property name="wheel_offset_z" value="-0.100998"/>
 
-    <xacro:macro name="chassis" params="name_space:='scout'">
+    <xacro:macro name="chassis" >
 
-        <link name="${name_space}_base_link">
+        <link name="base_link">
             <visual>
                 <origin xyz="0 0 0" rpy="1.5707 0 -1.5707"/>
                 <geometry>
@@ -30,7 +30,7 @@
             </collision>
         </link>
 
-        <link name="${name_space}_inertial_link">
+        <link name="inertial_link">
             <inertial>
                 <mass value="50"/>
                 <origin xyz="0.0 0.0 0.0"/>
@@ -40,29 +40,25 @@
 
         <joint name="inertial_joint" type="fixed">
             <origin xyz="0 0 0" rpy="0 0 0"/>
-            <parent link="${name_space}_base_link"/>
-            <child link="${name_space}_inertial_link"/>
+            <parent link="base_link"/>
+            <child link="inertial_link"/>
         </joint>
 
-        <xacro:sct_mini_wheel prefix="left_front" connected_to="${name_space}_base_link"
+        <xacro:sct_mini_wheel prefix="left_front" connected_to="base_link"
                      wheel_x_offset="${wheel_base/2}" wheel_y_offset="${wheel_track/2}"
                      wheel_z_offset="${wheel_offset_z}" rotation_degree="${-pi/2}"
-                     name_space="${name_space}"
         />
-        <xacro:sct_mini_wheel prefix="right_front" connected_to="${name_space}_base_link"
+        <xacro:sct_mini_wheel prefix="right_front" connected_to="base_link"
                      wheel_x_offset="${wheel_base/2}" wheel_y_offset="${-wheel_track/2}"
                      wheel_z_offset="${wheel_offset_z}" rotation_degree="${pi/2}"
-                     name_space="${name_space}"
         />
-        <xacro:sct_mini_wheel prefix="left_back" connected_to="${name_space}_base_link"
+        <xacro:sct_mini_wheel prefix="left_back" connected_to="base_link"
                      wheel_x_offset="${-wheel_base/2}" wheel_y_offset="${wheel_track/2}"
                      wheel_z_offset="${wheel_offset_z}" rotation_degree="${-pi/2}"
-                     name_space="${name_space}"
         />
-        <xacro:sct_mini_wheel prefix="right_back" connected_to="${name_space}_base_link"
+        <xacro:sct_mini_wheel prefix="right_back" connected_to="base_link"
                      wheel_x_offset="${-wheel_base/2}" wheel_y_offset="${-wheel_track/2}"
                      wheel_z_offset="${wheel_offset_z}" rotation_degree="${pi/2}"
-                     name_space="${name_space}"
         />
 
         <xacro:wheel_transmission prefix="left_front" mechanical_reduction="1"/>
