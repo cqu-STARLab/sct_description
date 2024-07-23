@@ -3,37 +3,44 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout">
 
     <xacro:arg name="load_chassis" default="true"/>
-    <xacro:arg name="load_radar" default="true"/>
+    <xacro:arg name="load_lidar" default="true"/>
+    <!-- select_lidar: radar or rs_lidar16 -->
+    <xacro:arg name="select_lidar" default="rs_lidar16"/>
     <xacro:arg name="load_odom_sim" default="true"/>
     <xacro:arg name="use_sim" default="true"/>
-    <xacro:arg name="robot_ns" default="/"/>
+    <xacro:arg name="gpu" default="true"/>
+    <xacro:property name="gpu" value="$(arg gpu)" />
 
     <xacro:if value="$(arg load_chassis)">
         <xacro:include filename="$(find sct_description)/urdf/scout/chassis.urdf.xacro"/>
         <xacro:chassis />
     </xacro:if>
 
-    <xacro:if value="$(arg load_radar)">
+    <xacro:if value="$(arg load_lidar)">
         <xacro:include filename="$(find sct_description)/urdf/common/radar.urdf.xacro"/>
-        <xacro:RADAR connected_to="base_link" use_sim="$(arg use_sim)"
+        <xacro:lidar connected_to="base_link" use_sim="$(arg use_sim)"
                      xyz="0.0 0.0 0.35"
                      rpy="0.0 0.0 0.0"/>
     </xacro:if>
 
+<!--    <xacro:include filename="$(find sct_description)/urdf/common/VLP-16.urdf.xacro"/>-->
+<!--    <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="${gpu}">-->
+<!--        <origin xyz="0 0 0.4" rpy="0 0 0" />-->
+<!--    </xacro:VLP-16>-->
+
     <xacro:if value="$(arg use_sim)">
         <xacro:if value="$(arg load_odom_sim)">
-            <!-- odom sim plugin -->
             <gazebo>
                 <plugin name="sct_odom_sim" filename="libsct_odom_sim.so">
                     <publish_rate>50.0</publish_rate>
-                    <robot_namespace>$(arg robot_ns)</robot_namespace>
+                    <robot_namespace>/</robot_namespace>
                 </plugin>
             </gazebo>
         </xacro:if>
 
         <gazebo>
             <plugin name="sct_ros_control" filename="libsct_robot_hw_sim.so">
-                <robotNamespace>$(arg robot_ns)</robotNamespace>
+                <robotNamespace>/</robotNamespace>
                 <robotSimType>sct_gazebo/SctRobotHWSim</robotSimType>
             </plugin>
         </gazebo>

@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout_wheel">
 
     <xacro:macro name="sct_mini_wheel"
-                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree ">
+                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree">
         <!--  link  -->
         <link name="${prefix}_wheel">
             <visual>

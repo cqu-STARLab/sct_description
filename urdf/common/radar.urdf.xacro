@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="radar">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="single_lidar">
     <xacro:include filename="$(find sct_description)/urdf/common/inertia_utils.urdf.xacro"/>
-    <xacro:macro name="RADAR" params="connected_to use_sim xyz:='0 0 0' rpy:='0 0 0' ">
+    <xacro:macro name="lidar" params="connected_to use_sim xyz:='0 0 0' rpy:='0 0 0' ">
 
         <!-- Radar is fixed to the base link -->
         <joint name="radar_joint" type="fixed">
@@ -18,12 +18,6 @@
                 </geometry>
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             </visual>
-<!--            <collision>-->
-<!--                <geometry>-->
-<!--                    <cylinder radius="0.03" length="0.03"/>-->
-<!--                </geometry>-->
-<!--                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>-->
-<!--            </collision>-->
             <collision>
                 <geometry>
                     <cylinder radius="0.36" length="0.03"/>
@@ -56,7 +50,6 @@
                             </horizontal>
                         </scan>
                         <range>
-<!--                            <min>0.260</min>-->
                             <min>0.370</min>
                             <max>50.0</max>
                             <resolution>0.015</resolution>
