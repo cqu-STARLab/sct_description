@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout">
-
+    <xacro:property name="M_PI" value="3.1415926535897931" />
     <xacro:arg name="load_chassis" default="true"/>
     <xacro:arg name="load_lidar" default="true"/>
+    <xacro:arg name="load_imu" default="true"/>
     <!-- select_lidar: radar or rs_lidar16 -->
     <xacro:arg name="select_lidar" default="rs_lidar16"/>
     <xacro:arg name="load_odom_sim" default="true"/>
@@ -16,27 +17,34 @@
         <xacro:chassis />
     </xacro:if>
 
-    <xacro:if value="$(arg load_lidar)">
-        <xacro:include filename="$(find sct_description)/urdf/common/radar.urdf.xacro"/>
-        <xacro:lidar connected_to="base_link" use_sim="$(arg use_sim)"
-                     xyz="0.0 0.0 0.35"
-                     rpy="0.0 0.0 0.0"/>
+<!--    <xacro:if value="$(arg load_lidar)">-->
+<!--        <xacro:include filename="$(find sct_description)/urdf/common/radar.urdf.xacro"/>-->
+<!--        <xacro:lidar connected_to="base_link" use_sim="$(arg use_sim)"-->
+<!--                     xyz="0.0 0.0 0.35"-->
+<!--                     rpy="0.0 0.0 0.0"/>-->
+<!--    </xacro:if>-->
+
+    <xacro:include filename="$(find sct_description)/urdf/common/VLP-16.urdf.xacro"/>
+    <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="${gpu}">
+        <origin xyz="0 0 0.4" rpy="0 0 0" />
+    </xacro:VLP-16>
+
+    <xacro:if value="$(arg load_imu)">
+        <xacro:include filename="$(find sct_description)/urdf/common/imu.urdf.xacro"/>
+        <xacro:IMU connected_to="base_link" imu_name="imu" use_sim="$(arg use_sim)"
+                   xyz="0.0 0.0 0.35" rpy="0 0.0 0"/>
     </xacro:if>
 
-<!--    <xacro:include filename="$(find sct_description)/urdf/common/VLP-16.urdf.xacro"/>-->
-<!--    <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="${gpu}">-->
-<!--        <origin xyz="0 0 0.4" rpy="0 0 0" />-->
-<!--    </xacro:VLP-16>-->
-
     <xacro:if value="$(arg use_sim)">
-        <xacro:if value="$(arg load_odom_sim)">
-            <gazebo>
-                <plugin name="sct_odom_sim" filename="libsct_odom_sim.so">
-                    <publish_rate>50.0</publish_rate>
-                    <robot_namespace>/</robot_namespace>
-                </plugin>
-            </gazebo>
-        </xacro:if>
+
+<!--        <xacro:if value="$(arg load_odom_sim)">-->
+<!--            <gazebo>-->
+<!--                <plugin name="sct_odom_sim" filename="libsct_odom_sim.so">-->
+<!--                    <publish_rate>50.0</publish_rate>-->
+<!--                    <robot_namespace>/</robot_namespace>-->
+<!--                </plugin>-->
+<!--            </gazebo>-->
+<!--        </xacro:if>-->
 
         <gazebo>
             <plugin name="sct_ros_control" filename="libsct_robot_hw_sim.so">
