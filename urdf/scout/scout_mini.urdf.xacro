@@ -5,6 +5,7 @@
     <xacro:arg name="load_chassis" default="true"/>
     <xacro:arg name="load_lidar" default="true"/>
     <xacro:arg name="load_imu" default="true"/>
+
     <!-- select_lidar: radar or rs_lidar16 -->
     <xacro:arg name="select_lidar" default="rs_lidar16"/>
     <xacro:arg name="load_odom_sim" default="true"/>
@@ -18,22 +19,29 @@
     </xacro:if>
 
     <xacro:if value="$(arg load_lidar)">
-        <xacro:include filename="$(find sct_description)/urdf/common/radar.urdf.xacro"/>
+        <xacro:include filename="$(find sct_description)/urdf/common/ouster_lidar.urdf.xacro"/>
         <xacro:lidar connected_to="base_link" use_sim="$(arg use_sim)"
                      xyz="0.0 0.0 0.35"
                      rpy="0.0 0.0 0.0"/>
     </xacro:if>
+
+<!--    <xacro:if value="$(arg load_lidar)">-->
+<!--        <xacro:include filename="$(find sct_description)/urdf/common/radar.urdf.xacro"/>-->
+<!--        <xacro:lidar connected_to="base_link" use_sim="$(arg use_sim)"-->
+<!--                     xyz="0.0 0.0 0.35"-->
+<!--                     rpy="0.0 0.0 0.0"/>-->
+<!--    </xacro:if>-->
 
 <!--    <xacro:include filename="$(find sct_description)/urdf/common/VLP-16.urdf.xacro"/>-->
 <!--    <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="${gpu}">-->
 <!--        <origin xyz="0 0 0.4" rpy="0 0 0" />-->
 <!--    </xacro:VLP-16>-->
 
-    <xacro:if value="$(arg load_imu)">
-        <xacro:include filename="$(find sct_description)/urdf/common/imu.urdf.xacro"/>
-        <xacro:IMU connected_to="base_link" imu_name="imu" use_sim="$(arg use_sim)"
-                   xyz="0.0 0.0 0.35" rpy="0 0.0 0"/>
-    </xacro:if>
+<!--    <xacro:if value="$(arg load_imu)">-->
+<!--        <xacro:include filename="$(find sct_description)/urdf/common/imu.urdf.xacro"/>-->
+<!--        <xacro:IMU connected_to="base_link" imu_name="imu" use_sim="$(arg use_sim)"-->
+<!--                   xyz="0.0 0.0 0.35" rpy="0 0.0 0"/>-->
+<!--    </xacro:if>-->
 
     <xacro:if value="$(arg use_sim)">
 
