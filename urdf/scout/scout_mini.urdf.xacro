@@ -15,14 +15,13 @@
 
     <xacro:if value="$(arg load_chassis)">
         <xacro:include filename="$(find sct_description)/urdf/scout/chassis.urdf.xacro"/>
-        <xacro:chassis />
+        <xacro:chassis use_sim="$(arg use_sim)"/>
     </xacro:if>
 
     <xacro:if value="$(arg load_lidar)">
-        <xacro:include filename="$(find sct_description)/urdf/common/ouster_lidar.urdf.xacro"/>
-        <xacro:lidar connected_to="base_link" use_sim="$(arg use_sim)"
-                     xyz="0.0 0.0 0.35"
-                     rpy="0.0 0.0 0.0"/>
+        <xacro:include filename="$(find sct_description)/urdf/common/os1_64.urdf.xacro"/>
+        <xacro:os1_64 connected_to="base_link" xyz="0.0 0.0 0.35" rpy="0.0 0.0 0.0"
+                      use_sim="$(arg use_sim)" gpu="true"/>
     </xacro:if>
 
 <!--    <xacro:if value="$(arg load_lidar)">-->
@@ -45,21 +44,21 @@
 
     <xacro:if value="$(arg use_sim)">
 
-        <xacro:if value="$(arg load_odom_sim)">
-            <gazebo>
-                <plugin name="sct_odom_sim" filename="libsct_odom_sim.so">
-                    <publish_rate>50.0</publish_rate>
-                    <robot_namespace>/</robot_namespace>
-                </plugin>
-            </gazebo>
-        </xacro:if>
+<!--        <xacro:if value="$(arg load_odom_sim)">-->
+<!--            <gazebo>-->
+<!--                <plugin name="sct_odom_sim" filename="libsct_odom_sim.so">-->
+<!--                    <publish_rate>50.0</publish_rate>-->
+<!--                    <robot_namespace>/</robot_namespace>-->
+<!--                </plugin>-->
+<!--            </gazebo>-->
+<!--        </xacro:if>-->
 
-        <gazebo>
-            <plugin name="sct_ros_control" filename="libsct_robot_hw_sim.so">
-                <robotNamespace>/</robotNamespace>
-                <robotSimType>sct_gazebo/SctRobotHWSim</robotSimType>
-            </plugin>
-        </gazebo>
+<!--        <gazebo>-->
+<!--            <plugin name="sct_ros_control" filename="libsct_robot_hw_sim.so">-->
+<!--                <robotNamespace>/</robotNamespace>-->
+<!--                <robotSimType>sct_gazebo/SctRobotHWSim</robotSimType>-->
+<!--            </plugin>-->
+<!--        </gazebo>-->
     </xacro:if>
 
 
