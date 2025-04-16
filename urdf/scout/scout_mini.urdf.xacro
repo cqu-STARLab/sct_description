@@ -10,6 +10,7 @@
     <xacro:arg name="select_lidar" default="rs_lidar16"/>
     <xacro:arg name="load_odom_sim" default="true"/>
     <xacro:arg name="use_sim" default="true"/>
+    <xacro:arg name="ns" default="/"/>
     <xacro:arg name="gpu" default="true"/>
     <xacro:property name="gpu" value="$(arg gpu)" />
 
@@ -46,7 +47,7 @@
 
         <gazebo>
             <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-                <robotNamespace>/</robotNamespace>
+                <robotNamespace>$(arg ns)</robotNamespace>
             </plugin>
         </gazebo>
 
