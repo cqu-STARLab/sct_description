@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout_wheel">
 
     <xacro:macro name="sct_mini_wheel"
-                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree">
+                 params="prefix connected_to wheel_x_offset wheel_y_offset wheel_z_offset rotation_degree rotation_ori">
         <!--  link  -->
         <link name="${prefix}_wheel">
             <visual>
@@ -19,14 +19,14 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://sct_description/meshes/common/wheel.dae"/>
+                    <cylinder radius="0.08" length="0.09"/>
                 </geometry>
             </collision>
         </link>
 
         <!--  joint  -->
-        <joint name="${prefix}_wheel_joint" type="revolute">
-            <axis xyz="0 0 1"/>
+        <joint name="${prefix}_wheel_joint" type="continuous">
+            <axis xyz="0 0 ${rotation_ori}"/>
             <origin xyz="${wheel_x_offset} ${wheel_y_offset} ${wheel_offset_z}" rpy="${rotation_degree} 0 0"/>
             <limit effort="50" velocity="100" lower="-1e9" upper="1e9"/>
             <dynamics damping="0.0" friction="0.01"/>
@@ -40,11 +40,11 @@
         <transmission name="${prefix}_wheel_trans">
             <type>transmission_interface/SimpleTransmission</type>
             <actuator name="${prefix}_wheel_motor">
-                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
                 <mechanicalReduction>${mechanical_reduction}</mechanicalReduction>
             </actuator>
             <joint name="${prefix}_wheel_joint">
-                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
             </joint>
         </transmission>
     </xacro:macro>
