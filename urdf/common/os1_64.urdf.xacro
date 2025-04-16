@@ -4,7 +4,7 @@
   <xacro:property name="PI" value="3.1415926535897931"/>
 
   <xacro:macro name="os1_64" params="xyz:='0 0 0' rpy:='0 0 0' connected_to:=base_link name:=ouster reduced:=true prefix:=ouster
-                                     hz:=10 samples:=2048 min_range:=0.8 max_range:=1000 noise:=0.00001
+                                     hz:=10 samples:=2048 min_range:=0.2 max_range:=1000 noise:=0.00001
                                      min_angle_v:=-16.6 max_angle_v:=16.6 gpu:=false use_sim:=false">
 
     <!-- Conditional properties -->
