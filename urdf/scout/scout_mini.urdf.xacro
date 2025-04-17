@@ -21,7 +21,7 @@
 
     <xacro:if value="$(arg load_lidar)">
         <xacro:include filename="$(find sct_description)/urdf/common/os1_64.urdf.xacro"/>
-        <xacro:os1_64 connected_to="base_link" xyz="0.0 0.0 0.35" rpy="0.0 0.0 0.0"
+        <xacro:os1_64 connected_to="base_link" xyz="0.0 0.0 0.5" rpy="0.0 0.0 0.0"
                       use_sim="$(arg use_sim)" gpu="true"/>
     </xacro:if>
 
@@ -62,7 +62,7 @@
 
 <!--        <gazebo>-->
 <!--            <plugin name="sct_ros_control" filename="libsct_robot_hw_sim.so">-->
-<!--                <robotNamespace>/</robotNamespace>-->
+<!--                <robotNamespace>$(arg ns)</robotNamespace>-->
 <!--                <robotSimType>sct_gazebo/SctRobotHWSim</robotSimType>-->
 <!--            </plugin>-->
 <!--        </gazebo>-->

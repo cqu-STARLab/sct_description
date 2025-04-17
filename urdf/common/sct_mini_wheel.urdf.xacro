@@ -28,7 +28,7 @@
         <joint name="${prefix}_wheel_joint" type="continuous">
             <axis xyz="0 0 ${rotation_ori}"/>
             <origin xyz="${wheel_x_offset} ${wheel_y_offset} ${wheel_offset_z}" rpy="${rotation_degree} 0 0"/>
-            <limit effort="50" velocity="100" lower="-1e9" upper="1e9"/>
+<!--            <limit effort="30" velocity="50" lower="-1e9" upper="1e9"/>-->
             <dynamics damping="0.0" friction="0.01"/>
             <parent link="${connected_to}"/>
             <child link="${prefix}_wheel"/>
