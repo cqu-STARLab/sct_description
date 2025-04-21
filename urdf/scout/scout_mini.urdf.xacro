@@ -9,7 +9,8 @@
     <!-- select_lidar: radar or rs_lidar16 -->
     <xacro:arg name="select_lidar" default="rs_lidar16"/>
     <xacro:arg name="load_odom_sim" default="true"/>
-    <xacro:arg name="use_sim" default="true"/>
+    <xacro:arg name="use_sim" default="false"/>
+    <xacro:arg name="ns" default="/"/>
     <xacro:arg name="gpu" default="true"/>
     <xacro:property name="gpu" value="$(arg gpu)" />
 
@@ -20,7 +21,7 @@
 
     <xacro:if value="$(arg load_lidar)">
         <xacro:include filename="$(find sct_description)/urdf/common/os1_64.urdf.xacro"/>
-        <xacro:os1_64 connected_to="base_link" xyz="0.0 0.0 0.35" rpy="0.0 0.0 0.0"
+        <xacro:os1_64 connected_to="base_link" xyz="0.0 0.0 0.5" rpy="0.0 0.0 0.0"
                       use_sim="$(arg use_sim)" gpu="true"/>
     </xacro:if>
 
@@ -44,6 +45,12 @@
 
     <xacro:if value="$(arg use_sim)">
 
+        <gazebo>
+            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                <robotNamespace>$(arg ns)</robotNamespace>
+            </plugin>
+        </gazebo>
+
 <!--        <xacro:if value="$(arg load_odom_sim)">-->
 <!--            <gazebo>-->
 <!--                <plugin name="sct_odom_sim" filename="libsct_odom_sim.so">-->
@@ -55,7 +62,7 @@
 
 <!--        <gazebo>-->
 <!--            <plugin name="sct_ros_control" filename="libsct_robot_hw_sim.so">-->
-<!--                <robotNamespace>/</robotNamespace>-->
+<!--                <robotNamespace>$(arg ns)</robotNamespace>-->
 <!--                <robotSimType>sct_gazebo/SctRobotHWSim</robotSimType>-->
 <!--            </plugin>-->
 <!--        </gazebo>-->
