@@ -9,7 +9,7 @@
     <!-- select_lidar: radar or rs_lidar16 -->
     <xacro:arg name="select_lidar" default="rs_lidar16"/>
     <xacro:arg name="load_odom_sim" default="true"/>
-    <xacro:arg name="use_sim" default="true"/>
+    <xacro:arg name="use_sim" default="false"/>
     <xacro:arg name="ns" default="/"/>
     <xacro:arg name="gpu" default="true"/>
     <xacro:property name="gpu" value="$(arg gpu)" />
