@@ -21,6 +21,18 @@
                     <mesh filename="package://sct_description/meshes/scout/base_link.dae"/>
                 </geometry>
             </visual>
+<!--            <visual>-->
+<!--                <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>-->
+<!--                <geometry>-->
+<!--                    <mesh filename="package://sct_description/meshes/scout/base_link.stl" scale="0.001 0.001 0.001"/>-->
+<!--                </geometry>-->
+<!--            </visual>-->
+            <visual>
+                <origin xyz="0 0 0.15" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="package://sct_description/meshes/scout/upper_shell.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>

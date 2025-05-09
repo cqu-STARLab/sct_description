@@ -21,7 +21,7 @@
 
     <xacro:if value="$(arg load_lidar)">
         <xacro:include filename="$(find sct_description)/urdf/common/os1_64.urdf.xacro"/>
-        <xacro:os1_64 connected_to="base_link" xyz="0.0 0.0 0.5" rpy="0.0 0.0 0.0"
+        <xacro:os1_64 connected_to="base_link" xyz="0.1349044 0.0 0.265" rpy="0.0 0.0 0.0"
                       use_sim="$(arg use_sim)" gpu="true"/>
     </xacro:if>
 
